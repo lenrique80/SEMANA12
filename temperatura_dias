@@ -1,0 +1,37 @@
+import numpy as np
+
+# Definir las ciudades y sus temperaturas promedio
+ciudades = ["Guayaquil", "Quito", "Latacunga", "Portoviejo", "Manta", "Pedernales", "Ibarra", "Cuenca"]
+temperaturas_promedio = [30, 10, 7, 28, 25, 28, 13, 10]
+
+# Número de ciudades, días de la semana y semanas
+num_ciudades = len(ciudades)
+num_dias = 7  # Lunes a Domingo
+num_semanas = 4
+
+# Crear una matriz 3D de temperaturas con ligeras variaciones alrededor de las temperaturas promedio
+np.random.seed(0)  # Para reproducibilidad
+temperaturas = np.array([
+    np.random.uniform(temp - 5, temp + 5, (num_dias, num_semanas))
+    for temp in temperaturas_promedio
+])
+
+# Inicializar la matriz para los promedios semanales
+promedios_semanales = np.zeros((num_ciudades, num_semanas))
+
+# Calcular el promedio de temperaturas por ciudad y por semana
+for ciudad in range(num_ciudades):
+    for semana in range(num_semanas):
+        # Obtener las temperaturas para la ciudad en la semana actual
+        temperaturas_semana = temperaturas[ciudad, :, semana]
+        # Calcular el promedio de temperaturas
+        promedio_semana = np.mean(temperaturas_semana)
+        # Almacenar el promedio en la matriz de promedios semanales
+        promedios_semanales[ciudad, semana] = promedio_semana
+
+# Mostrar los resultados
+for ciudad in range(num_ciudades):
+    print(f"Ciudad: {ciudades[ciudad]}")
+    for semana in range(num_semanas):
+        print(f"  Promedio de la semana {semana + 1}: {promedios_semanales[ciudad, semana]:.2f} °C")
+    print()
